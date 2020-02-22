@@ -1,0 +1,20 @@
+{
+  "name": "managing-csv-data-with-maps-tutorial",
+  "version": "1.0.0",
+  "description": ":pushpin: A single-page app for managing spreadsheet data using the Google Maps API. Created for my YouTube tutorial.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BryceStPierre/managing-csv-data-with-maps-tutorial.git"
+  },
+  "keywords": [],
+  "author": "Bryce St. Pierre",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/BryceStPierre/managing-csv-data-with-maps-tutorial/issues"
+  },
+  "homepage": "https://github.com/BryceStPierre/managing-csv-data-with-maps-tutorial#readme"
+}
