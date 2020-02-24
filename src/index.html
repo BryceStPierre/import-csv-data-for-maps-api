@@ -7,6 +7,6 @@
     <title><%= htmlWebpackPlugin.options.title %></title>
 </head>
 <body>
-<script type="text/javascript" src="URL?API_KEY=<%= htmlWebpackPlugin.options.apiKey %>"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=<%= htmlWebpackPlugin.options.apiKey %>&libraries=places" async defer></script>
 </body>
 </html>
