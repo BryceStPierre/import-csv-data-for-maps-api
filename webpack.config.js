@@ -1,18 +1,19 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
+require('dotenv').config();
+
 module.exports = {
   mode: 'production',
+  devServer: {
+    contentBase: './dist'
+  },
   entry: {
     main: './src/js/index.js'
   },
   output: {
     filename: '[name].bundle.js',
     path: path.resolve(__dirname, 'dist'),
-  },
-  devtool: 'inline-source-map',
-  devServer: {
-    contentBase: './dist'
   },
   module: {
     rules: [
@@ -23,7 +24,10 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Managing Spreadsheet Data with Google Maps',
       template: './src/index.html',
-      apiKey: 'API_KEY_HERE'
+      apiKey: process.env.API_KEY,
+      minify: {
+        collapseWhitespace: true
+      }
     })
   ]
 };
