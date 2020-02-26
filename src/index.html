@@ -2,128 +2,153 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title><%= htmlWebpackPlugin.options.title %></title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title><%= htmlWebpackPlugin.options.title %></title>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="#">Web App</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText"
-            aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarText">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Import Data</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Select Fields</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Plan Route</a>
-                </li>
-            </ul>
+  <div class="container-fluid">
+
+    <!-- Home Section -->
+    <section id="homeSection" class="jumbotron">
+      <h1 class="display-5"><%= htmlWebpackPlugin.options.title %></h1>
+      <p class="lead">Use your spreadsheet data, plot the locations on the map, plan a route, and generate a
+        report.</p>
+      <hr class="my-4">
+      <p>When you're ready, click the button below to continue.</p>
+      <a id="getStartedButton" class="btn btn-primary" href="#" role="button">Get Started</a>
+    </section>
+
+    <!-- Import Data Section -->
+    <section id="importSection" class="jumbotron">
+      <h1 class="display-5">Import Data</h1>
+      <p class="lead">Select a CSV file to parse and use with a map.</p>
+      <div class="input-group mb-3">
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" id="fileInput" accept=".csv">
+          <label class="custom-file-label" for="fileInput">Choose file...</label>
         </div>
-    </nav>
+      </div>
+      <hr class="my-4">
+      <p>When you're ready, click the button below to import your data.</p>
+      <div id="fileAlert" class="alert alert-danger" role="alert">
+        This is a danger alert—check it out!
+      </div>
+      <button id="importButton" class="btn btn-primary">Import</button>
+    </section>
 
-    <div class="container-fluid">
-        <section class="jumbotron">
-            <h1 class="display-5"><%= htmlWebpackPlugin.options.title %></h1>
-            <p class="lead">Use your spreadsheet data, plot the locations on the map, plan a route, and generate a
-                report.</p>
-            <hr class="my-4">
-            <p>When you're ready, click the button below to continue.</p>
-            <a class="btn btn-primary" href="#" role="button">Get Started</a>
-        </section>
-
-        <section class="jumbotron">
-            <h1 class="display-5">Import Data</h1>
-            <p class="lead">Select a CSV file to parse and use with a map.</p>
-            <div class="input-group mb-3">
-                <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="inputGroupFile01">
-                    <label class="custom-file-label" for="inputGroupFile01">Choose file...</label>
-                </div>
+    <!-- Select Fields Section -->
+    <section id="fieldsSection" class="jumbotron">
+      <h1 class="display-5">Select Fields</h1>
+      <p class="lead">Choose the required and optional columns you want to use.</p>
+      <form id="fieldsForm" novalidate>
+        <div class="form-group row">
+          <label for="addressInput" class="col-form-label col-sm-4">Address</label>
+          <div class="col-sm-6">
+            <select id="addressInput" class="form-control" required></select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="cityInput" class="col-form-label col-sm-4">City</label>
+          <div class="col-sm-6">
+            <select id="cityInput" class="form-control" required></select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="provinceInput" class="col-form-label col-sm-4">Province</label>
+          <div class="col-sm-6">
+            <select id="provinceInput" class="form-control" required></select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="postalCodeInput" class="col-form-label col-sm-4">Postal Code</label>
+          <div class="col-sm-6">
+            <select id="postalCodeInput" class="form-control" required></select>
+          </div>
+        </div>
+        <div class="form-group row">
+          <label for="countryInput" class="col-form-label col-sm-4">Country</label>
+          <div class="col-sm-6">
+            <select id="countryInput" class="form-control" required></select>
+          </div>
+        </div>
+        <fieldset class="form-group">
+          <div class="row">
+            <legend class="col-form-label col-sm-4">Additional Fields</legend>
+            <div class="col-sm-6 mt-1">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="field1">
+                <label class="form-check-label" for="field1">Field 1</label>
+              </div>
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="field2">
+                <label class="form-check-label" for="field2">Field 2</label>
+              </div>
             </div>
-            <hr class="my-4">
-            <p>When you're ready, click the button below to import your data.</p>
-            <a class="btn btn-primary" href="#" role="button">Import</a>
-        </section>
+          </div>
+        </fieldset>
 
-        <section class="jumbotron">
-            <h1 class="display-5">Select Fields</h1>
-            <p class="lead">Choose the required and optional columns you want to use.</p>
-            <hr class="my-4">
-            <p>When you're ready, click the button below to geocode the data and load your map.</p>
-            <div class="progress mb-4">
-                <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-                    aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%">75%</div>
+        <hr class="my-4">
+        <p>When you're ready, click the button below to geocode the data and load your map.</p>
+        <div class="progress mb-4">
+          <div id="progressBar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+            aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%">75%</div>
+        </div>
+        <button id="plotButton" class="btn btn-primary" type="submit">Plot</button>
+      </form>
+    </section>
+
+    <!-- Plan Route Section -->
+    <section id="routeSection" class="jumbotron">
+      <h1 class="display-5">Plan Route</h1>
+      <p class="lead">Select the locations in order to create your directions.</p>
+      <div class="row">
+        <div class="col-7">
+          <div id="map"></div>
+          <div class="row">
+            <div class="col-6">
+              <p class="mt-4">
+                <b>Selected Location</b>
+              </p>
+              <pre id="locationPre"></pre>
             </div>
-            <a class="btn btn-primary" href="#" role="button">Plot</a>
-        </section>
-
-        <section class="jumbotron">
-            <h1 class="display-5">Plan Route</h1>
-            <p class="lead">Select the stops in order to create your directions.</p>
-            
-            <div class="row">
-                <div class="col-7">
-                    <div id="map"></div>
-                    <div class="row">
-                        <div class="col-6">
-                            <p class="mt-4"><b>Location</b></p>
-                            <pre></pre>
-                        </div>
-                        <div class="col-6">
-                            <p class="mt-4"><b>Data Point</b></p>
-                            <pre></pre>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-5">
-                    <table class="table">
-                        <thead class="thead-dark">
-                            <tr>
-                                <th scope="col">#</th>
-                                <th scope="col">Letter</th>
-                                <th scope="col">Address</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>A</td>
-                                <td>Otto</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>B</td>
-                                <td>Thornton</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>C</td>
-                                <td>the Bird</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+            <div class="col-6">
+              <p class="mt-4">
+                <b>Selected Data</b>
+              </p>
+              <pre id="dataPointPre"></pre>
             </div>
-            <hr class="my-4">
-            <p>Click one of the buttons below to save a PDF report or save your JSON data.</p>
-            <a class="btn btn-primary" href="#" role="button">Save PDF</a>
-            <a class="btn btn-primary" href="#" role="button">Save JSON</a>
-        </section>
-    </div>
+          </div>
+        </div>
+        <div class="col-5">
+          <table class="table">
+            <thead class="thead-dark">
+              <tr>
+                <th scope="col">Location</th>
+                <th scope="col">Address</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td scope="row">A</td>
+                <td>123 Main Street</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <hr class="my-4">
+      <p>Click one of the buttons below to save a PDF report or save your JSON data.</p>
+      <button id="savePdfButton" class="btn btn-primary">Save PDF</button>
+      <button id="saveJsonButton" class="btn btn-primary">Save JSON</button>
+    </section>
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=<%= htmlWebpackPlugin.options.apiKey %>&libraries=places"></script>
+  </div>
+
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=<%= htmlWebpackPlugin.options.apiKey %>&libraries=places"></script>
 </body>
 
 </html>
