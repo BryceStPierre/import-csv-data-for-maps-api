@@ -18,11 +18,11 @@
         report.</p>
       <hr class="my-4">
       <p>When you're ready, click the button below to continue.</p>
-      <a id="getStartedButton" class="btn btn-primary" href="#" role="button">Get Started</a>
+      <button id="getStartedButton" class="btn btn-primary">Get Started</button>
     </section>
 
     <!-- Import Data Section -->
-    <section id="importSection" class="jumbotron">
+    <section id="importSection" class="jumbotron" style="display:none">
       <h1 class="display-5">Import Data</h1>
       <p class="lead">Select a CSV file to parse and use with a map.</p>
       <div class="input-group mb-3">
@@ -33,14 +33,12 @@
       </div>
       <hr class="my-4">
       <p>When you're ready, click the button below to import your data.</p>
-      <div id="fileAlert" class="alert alert-danger" role="alert">
-        This is a danger alert—check it out!
-      </div>
+      <div id="fileAlert" class="alert alert-danger" role="alert"></div>
       <button id="importButton" class="btn btn-primary">Import</button>
     </section>
 
     <!-- Select Fields Section -->
-    <section id="fieldsSection" class="jumbotron">
+    <section id="fieldsSection" class="jumbotron" style="display:none">
       <h1 class="display-5">Select Fields</h1>
       <p class="lead">Choose the required and optional columns you want to use.</p>
       <form id="fieldsForm" novalidate>
@@ -48,43 +46,44 @@
           <label for="addressInput" class="col-form-label col-sm-4">Address</label>
           <div class="col-sm-6">
             <select id="addressInput" class="form-control" required></select>
+            <div class="invalid-feedback">Please choose a field for address.</div>
           </div>
         </div>
         <div class="form-group row">
           <label for="cityInput" class="col-form-label col-sm-4">City</label>
           <div class="col-sm-6">
             <select id="cityInput" class="form-control" required></select>
+            <div class="invalid-feedback">Please choose a field for city.</div>
           </div>
         </div>
         <div class="form-group row">
           <label for="provinceInput" class="col-form-label col-sm-4">Province</label>
           <div class="col-sm-6">
             <select id="provinceInput" class="form-control" required></select>
+            <div class="invalid-feedback">Please choose a field for province.</div>
           </div>
         </div>
         <div class="form-group row">
           <label for="postalCodeInput" class="col-form-label col-sm-4">Postal Code</label>
           <div class="col-sm-6">
             <select id="postalCodeInput" class="form-control" required></select>
+            <div class="invalid-feedback">Please choose a field for postal code.</div>
           </div>
         </div>
         <div class="form-group row">
           <label for="countryInput" class="col-form-label col-sm-4">Country</label>
           <div class="col-sm-6">
             <select id="countryInput" class="form-control" required></select>
+            <div class="invalid-feedback">Please choose a field for country.</div>
           </div>
         </div>
         <fieldset class="form-group">
           <div class="row">
             <legend class="col-form-label col-sm-4">Additional Fields</legend>
-            <div class="col-sm-6 mt-1">
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="field1">
-                <label class="form-check-label" for="field1">Field 1</label>
-              </div>
-              <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="field2">
-                <label class="form-check-label" for="field2">Field 2</label>
+            <div id="additionalFieldsContainer" class="col-sm-6 mt-1">
+              <div class="custom-control custom-switch">
+                <input type="checkbox" class="custom-control-input" id="field1" checked>
+                <label class="custom-control-label" for="field1">Field 1</label>
               </div>
             </div>
           </div>
@@ -96,12 +95,13 @@
           <div id="progressBar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
             aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 75%">75%</div>
         </div>
+        <div id="plotAlert" class="alert alert-danger" role="alert"></div>
         <button id="plotButton" class="btn btn-primary" type="submit">Plot</button>
       </form>
     </section>
 
     <!-- Plan Route Section -->
-    <section id="routeSection" class="jumbotron">
+    <section id="routeSection" class="jumbotron" style="display:none">
       <h1 class="display-5">Plan Route</h1>
       <p class="lead">Select the locations in order to create your directions.</p>
       <div class="row">
@@ -130,7 +130,7 @@
                 <th scope="col">Address</th>
               </tr>
             </thead>
-            <tbody>
+            <tbody id="locationTableBody">
               <tr>
                 <td scope="row">A</td>
                 <td>123 Main Street</td>
