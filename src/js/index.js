@@ -3,6 +3,8 @@ import $ from 'jquery';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../style.css';
 
+import { store, retrieve } from './utils/storage';
+
 import {
   goToImportSection,
   goToFieldsSection, 
@@ -11,14 +13,13 @@ import {
   returnToFieldsSection
 } from './interactions/navigation';
 
-import { store } from './utils/storage';
-
 import { handleFileInput } from './interactions/file';
-
-import { populateFields } from './interactions/fields';
+import { 
+  populateFields,
+  setGeocodingField
+} from './interactions/fields';
 
 $(() => {
-
   /*
    * Home Section
    */
@@ -64,16 +65,13 @@ $(() => {
    */
   $('#fieldsReturnButton').click(returnToFieldsSection);
 
+  $('#addressInput, #cityInput, #provinceInput, #postalCodeInput, #countryInput')
+    .change(function () {
+      setGeocodingField($(this).attr('name'), $(this).val());
+      console.log(retrieve('config').fields);
+    });
 
   // $('pre').text(JSON.stringify(data, null, 2));
-
-  // var map = new google.maps.Map(
-  //   document.getElementById('map'), 
-  //   {
-  //     zoom: 4, 
-  //     center: {lat: -25.344, lng: 131.036}
-  //   }
-  // );
 
   $('#importForm').submit(e => {
     e.preventDefault();
