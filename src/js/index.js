@@ -3,7 +3,7 @@ import $ from 'jquery';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../style.css';
 
-import { store } from './utils/storage';
+import { store, retrieve } from './utils/storage';
 
 import {
   goToImportSection,
@@ -20,6 +20,9 @@ import {
   populateDataFields,
   setGeocodingField
 } from './interactions/fields';
+
+import { geocode } from './data/geocode';
+import { transform } from './data/transform';
 
 $(() => {
   /*
@@ -66,10 +69,21 @@ $(() => {
   $('#importReturnButton').click(returnToImportSection);
 
   $('#plotButton').click(() => {
-    if ($('#fieldsForm').get(0).checkValidity() === false)
+    if ($('#fieldsForm').get(0).checkValidity() === false) {
       $('#fieldsForm').addClass('was-validated');
-    else
-      goToRouteSection();
+    } else {
+      store('progress', 0);
+
+      const data = retrieve('data');
+      const config = retrieve('config');
+
+      geocode(transform(data, config), (err, geocodedData) => {
+        console.log('Done');
+      });
+
+      //console.log(transform());
+      //goToRouteSection();
+    }
   })
 
   /*
