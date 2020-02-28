@@ -1,5 +1,24 @@
 import $ from 'jquery';
 
+export const handleFileInput = (e, callback) => {
+  if (e.target.files.length < 1) 
+    return;
+
+  let file = e.target.files[0];
+
+  if (file.type !== 'text/csv') {
+    $('#fileLabel').text('Invalid file type. Please choose a CSV file.');
+    return;
+  }
+
+  $('#fileLabel').text(`File: ${file.name}`);
+
+  let fileReader = new FileReader();
+  fileReader.onload = e => callback(null, parseCsv(e.target.result));
+  fileReader.onerror = err => callback(err, null);
+  fileReader.readAsText(file);
+};
+
 const parseCsv = text => {
   let lines = text.split('\r\n');
 
@@ -24,23 +43,3 @@ const parseCsv = text => {
     data
   };
 } 
-
-export const handleFileInput = (e, callback) => {
-  if (e.target.files.length < 1) {
-    return;
-  }
-
-  let file = e.target.files[0];
-
-  if (file.type !== 'text/csv') {
-    return;
-  }
-
-  $('#fileLabel').text(`File: ${file.name}`);
-
-  let fileReader = new FileReader();
-  fileReader.onload = e => callback(null, parseCsv(e.target.result));
-  fileReader.onerror = err => callback(err, null);
-  fileReader.readAsText(file);
-};
-
