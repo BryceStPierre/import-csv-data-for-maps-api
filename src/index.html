@@ -25,18 +25,16 @@
     <section id="importSection" class="jumbotron" style="display:none">
       <h1 class="display-5">Import Data</h1>
       <p class="lead">Select a CSV file to parse and use with a map.</p>
-      <form id="importForm" novalidate>
-        <div class="input-group mb-3">
-          <div class="custom-file">
-            <input id="fileInput" type="file" class="custom-file-input" accept=".csv" required>
-            <label id="fileLabel" class="custom-file-label" for="fileInput">Choose file...</label>
-          </div>
+      <div class="input-group mb-3">
+        <div class="custom-file">
+          <input id="fileInput" type="file" class="custom-file-input" accept=".csv" required>
+          <label id="fileLabel" class="custom-file-label" for="fileInput">Choose file...</label>
         </div>
-        <hr class="my-4">
-        <p>When you're ready, click the button below to import your data.</p>
-        <div id="fileAlert" class="alert alert-danger" role="alert" style="display:none"></div>
-        <button id="importButton" class="btn btn-primary">Import</button>
-      </form>
+      </div>
+      <hr class="my-4">
+      <p>When you're ready, click the button below to import your data.</p>
+      <div id="fileAlert" class="alert alert-danger" role="alert" style="display:none"></div>
+      <button id="importButton" class="btn btn-primary">Import</button>
     </section>
 
     <!-- Select Fields Section -->
@@ -81,13 +79,8 @@
         </div>
         <fieldset class="form-group">
           <div class="row">
-            <legend class="col-form-label col-sm-4">Additional Fields</legend>
-            <div id="additionalFieldsContainer" class="col-sm-6 mt-1">
-              <div class="custom-control custom-switch">
-                <input type="checkbox" class="custom-control-input" id="field1" checked>
-                <label class="custom-control-label" for="field1">Field 1</label>
-              </div>
-            </div>
+            <legend class="col-form-label col-sm-4">Data Fields</legend>
+            <div id="dataFieldsContainer" class="col-sm-6 mt-1"></div>
           </div>
         </fieldset>
 

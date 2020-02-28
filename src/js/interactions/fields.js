@@ -2,7 +2,7 @@ import $ from 'jquery';
 
 import { store, retrieve } from '../utils/storage';
 
-export const populateFields = () => {
+export const populateGeocodingFields = () => {
   const fields = retrieve('fields');
 
   let dataFields = [...fields];
@@ -21,7 +21,6 @@ export const populateFields = () => {
     }
   });
 
-
   fields.forEach(field => {
     let $option = $('<option />')
       .attr('value', field)
@@ -32,35 +31,65 @@ export const populateFields = () => {
   });
 };
 
-export const populateDataFields = () => {
-  const fields = retrieve('fields');
-  let dataFields = [...fields];
-
-  let values = Object.values(fields.geocoding);
-  values.forEach(v => {
-    let index = fields.findIndex(f => f === v);
-    if (index !== -1)
-      dataFields.splice(index, 1);
-  });
-
-  dataFields.forEach(field => {
-
-  });
-};
-
 export const setGeocodingField = (name, fieldName) => {
   let config = Object.assign({}, retrieve('config'));
   config.fields.geocoding[name] = fieldName;
   store('config', config);
 };
 
-export const addDataField = fieldName => {
+export const populateDataFields = () => {
+  const fields = retrieve('fields');
+  const config = retrieve('config');
+
+  let dataFields = [...fields];
+
+  let values = Object.values(config.fields.geocoding);
+  values.forEach(v => {
+    let index = dataFields.findIndex(f => f === v);
+    if (index !== -1)
+      dataFields.splice(index, 1);
+  });
+
+  config.fields.data = dataFields;
+  store('config', config);
+
+  $('#dataFieldsContainer').html('');
+
+  dataFields.forEach(field => {
+    let $switch = $('<div />')
+      .attr('class', 'custom-control custom-switch');
+
+    let $input = $('<input />')
+      .attr('class', 'custom-control-input')
+      .attr('type', 'checkbox')
+      .attr('name', field)
+      .attr('id', field)
+      .prop('checked', true)
+      .change(function () {
+        if ($(this).prop('checked'))
+          addDataField($(this).attr('name'));
+        else
+          removeDataField($(this).attr('name'));
+      });
+
+    let $label = $('<label />')
+      .attr('class', 'custom-control-label')
+      .attr('for', field)
+      .text(field);
+
+    $switch.append($input);
+    $switch.append($label);
+    $('#dataFieldsContainer').append($switch);
+  });
+};
+
+const addDataField = fieldName => {
   let config = Object.assign({}, retrieve('config'));
   config.fields.data.push(fieldName);
   store('config', config);
 };
 
-export const removeDataField = fieldName => {
+const removeDataField = fieldName => {
   let config = Object.assign({}, retrieve('config'));
 
   let index = config.fields.data.findIndex(f => f === fieldName);

@@ -3,19 +3,21 @@ import $ from 'jquery';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../style.css';
 
-import { store, retrieve } from './utils/storage';
+import { store } from './utils/storage';
 
 import {
   goToImportSection,
-  goToFieldsSection, 
+  goToFieldsSection,
   goToRouteSection,
   returnToImportSection,
   returnToFieldsSection
 } from './interactions/navigation';
 
 import { handleFileInput } from './interactions/file';
-import { 
-  populateFields,
+
+import {
+  populateGeocodingFields,
+  populateDataFields,
   setGeocodingField
 } from './interactions/fields';
 
@@ -33,6 +35,9 @@ $(() => {
    */
   $('#fileInput').change(e => {
     handleFileInput(e, (err, imported) => {
+      if (err || !imported)
+        return;
+
       store('fields', imported.fields);
       store('data', imported.data);
       $('#importButton').prop('disabled', false);
@@ -40,17 +45,24 @@ $(() => {
   });
 
   $('#importButton').click(() => {
-    if ($('#importForm').get(0).checkValidity() === false) {
-      $('#importForm').addClass('was-validated');
-    } else {
-      goToFieldsSection();
-      populateFields();
-    }
+    goToFieldsSection();
+    populateGeocodingFields();
+    populateDataFields();
   });
 
   /*
    * Fields Section
    */
+  $('#fieldsForm').submit(e => {
+    e.preventDefault();
+    e.stopPropagation();
+  });
+
+  $('#addressInput, #cityInput, #provinceInput, #postalCodeInput, #countryInput').change(function () {
+    setGeocodingField($(this).attr('name'), $(this).val());
+    populateDataFields();
+  });
+
   $('#importReturnButton').click(returnToImportSection);
 
   $('#plotButton').click(() => {
@@ -65,20 +77,5 @@ $(() => {
    */
   $('#fieldsReturnButton').click(returnToFieldsSection);
 
-  $('#addressInput, #cityInput, #provinceInput, #postalCodeInput, #countryInput')
-    .change(function () {
-      setGeocodingField($(this).attr('name'), $(this).val());
-      console.log(retrieve('config').fields);
-    });
-
   // $('pre').text(JSON.stringify(data, null, 2));
-
-  $('#importForm').submit(e => {
-    e.preventDefault();
-    e.stopPropagation();
-  });
-  $('#fieldsForm').submit(e => {
-    e.preventDefault();
-    e.stopPropagation();
-  });
 });
