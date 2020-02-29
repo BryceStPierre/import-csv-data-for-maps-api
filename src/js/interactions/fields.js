@@ -42,7 +42,6 @@ export const populateDataFields = () => {
   const config = retrieve('config');
 
   let dataFields = [...fields];
-
   let values = Object.values(config.fields.geocoding);
   values.forEach(v => {
     let index = dataFields.findIndex(f => f === v);
