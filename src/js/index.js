@@ -78,11 +78,13 @@ $(() => {
       const config = retrieve('config');
 
       geocode(transform(data, config), (err, geocodedData) => {
-        console.log('Done');
-      });
+        if (err || !geocodedData)
+          return;
 
-      //console.log(transform());
-      //goToRouteSection();
+        store('data', geocodedData);
+        //initializeMap();
+        goToRouteSection();
+      });
     }
   })
 
