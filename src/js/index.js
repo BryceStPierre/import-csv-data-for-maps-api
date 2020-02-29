@@ -21,6 +21,10 @@ import {
   setGeocodingField
 } from './interactions/fields';
 
+import {
+  createMap
+} from './interactions/map';
+
 import { geocode } from './data/geocode';
 import { transform } from './data/transform';
 
@@ -82,7 +86,7 @@ $(() => {
           return;
 
         store('data', geocodedData);
-        //initializeMap();
+        createMap();
         goToRouteSection();
       });
     }
@@ -93,5 +97,4 @@ $(() => {
    */
   $('#fieldsReturnButton').click(returnToFieldsSection);
 
-  // $('pre').text(JSON.stringify(data, null, 2));
 });
