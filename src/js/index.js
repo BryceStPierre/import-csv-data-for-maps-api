@@ -86,6 +86,7 @@ $(() => {
           return;
 
         store('data', geocodedData);
+        store('route', []);
         createMap();
         goToRouteSection();
       });
