@@ -37,12 +37,12 @@ $(() => {
    * Import Section
    */
   $('#fileInput').change(e => {
-    handleFileInput(e, (err, imported) => {
-      if (err || !imported)
+    handleFileInput(e, (err, csv) => {
+      if (err || !csv)
         return;
 
-      store('fields', imported.fields);
-      store('data', imported.data);
+      store('fields', csv.fields);
+      store('data', csv.data);
       $('#importButton').prop('disabled', false);
     });
   });
