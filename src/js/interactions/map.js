@@ -10,10 +10,6 @@ export const createMap = () => {
     zoom: 11
   };
 
-  let index = Math.floor(Math.random() * data.length);
-  if (data && data[index])
-    mapOptions.center = data[index].latLng;
-
   let markers = [];
   let bounds = new google.maps.LatLngBounds();
   let map = new google.maps.Map(
@@ -36,8 +32,8 @@ export const createMap = () => {
       $('#dataPointPre').text(JSON.stringify(d.data, null, 2));
     });
     m.addListener('mouseout', () => {      
-      $('#locationPre').text('No location selected.');
-      $('#dataPointPre').text('No location selected.');
+      $('#locationPre').text('No location to show.');
+      $('#dataPre').text('No data to show.');
     });
 
     markers.push(m);
