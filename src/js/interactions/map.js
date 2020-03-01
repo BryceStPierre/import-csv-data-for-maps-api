@@ -31,18 +31,24 @@ export const createMap = () => {
       position: d.latLng,
     });
 
-    m.addListener('click', () => {
-      pushRouteLocation(i);
-      renderDirections(directionsRenderer, map);
-      m.setMap(null);
-    });
     m.addListener('mouseover', () => {      
       $('#locationPre').text(JSON.stringify(d.addressObject, null, 2));
-      $('#dataPointPre').text(JSON.stringify(d.data, null, 2));
+      $('#dataPre').text(JSON.stringify(d.data, null, 2));
     });
     m.addListener('mouseout', () => {      
       $('#locationPre').text('No location to show.');
       $('#dataPre').text('No data to show.');
+    });
+    m.addListener('click', () => {
+      pushRouteLocation(i);
+      renderDirections(directionsRenderer, map);
+
+      const route = retrieve('route');
+      if (route.length >= 2) {
+        markers
+          .filter((m, i) => route.includes(i))
+          .forEach(m => m.setMap(null));
+      }
     });
 
     markers.push(m);
@@ -90,6 +96,7 @@ const pushRouteLocation = index => {
   let route = retrieve('route');
   if (!route)
     route = [];
+
   route.push(index);
   store('route', route);
 }
