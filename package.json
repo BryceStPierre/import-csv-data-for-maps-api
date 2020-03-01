@@ -2,7 +2,7 @@
   "name": "managing-csv-data-with-maps-tutorial",
   "version": "1.0.0",
   "description": ":pushpin: A single-page app for managing spreadsheet data using the Google Maps API. Created for my YouTube tutorial.",
-  "main": "index.js",
+  "main": "src/js/index.js",
   "scripts": {
     "build": "webpack",
     "watch": "webpack --watch",

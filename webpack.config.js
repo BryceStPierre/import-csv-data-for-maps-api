@@ -23,7 +23,7 @@ module.exports = {
   }, 
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Managing Spreadsheet Data with Google Maps',
+      title: 'Using Spreadsheet Data with Google Maps API',
       template: './src/index.html',
       apiKey: process.env.API_KEY,
       minify: {

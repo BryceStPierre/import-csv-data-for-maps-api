@@ -1,5 +1,5 @@
-# Using CSV Data with Google Maps Tutorial
-A single-page app for using spreadsheet data with the Google Maps API, created for my YouTube tutorial.
+# Using Spreadsheet Data with Google Maps API Tutorial
+A single-page app for using spreadsheet data with the Google Maps API. Developed for for my YouTube tutorial.
 
 ## Getting Started
 1. Clone the repo and open the project.
