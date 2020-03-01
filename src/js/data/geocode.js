@@ -7,7 +7,7 @@ export const geocode = (data, callback) => {
   let promises = [];
   data.forEach((d, i) => {
     promises.push(
-      geocoderPromise(geocoder, d, increment, i + 1)
+      geocoderPromise(geocoder, d, increment, i)
     );
   });
 
