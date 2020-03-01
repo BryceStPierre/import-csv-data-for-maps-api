@@ -56,6 +56,7 @@ $(() => {
   });
 
   $('#importButton').click(() => {
+    $('#fileInput').prop('disabled', true);
     goToFieldsSection();
     populateGeocodingFields();
     populateDataFields();
