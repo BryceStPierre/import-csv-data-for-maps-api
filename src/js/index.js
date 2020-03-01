@@ -30,6 +30,8 @@ import {
 
 import { geocode } from './data/geocode';
 import { transform } from './data/transform';
+import { exportJsonData } from './export/json';
+import { exportPdfReport } from './export/pdf';
 
 $(() => {
   /*
@@ -103,5 +105,10 @@ $(() => {
    * Route Section
    */
   $('#fieldsReturnButton').click(returnToFieldsSection);
-
+  $('#exportPdfButton').click(() => {
+    exportPdfReport();
+  });
+  $('#exportJsonButton').click(() => {
+    exportJsonData();
+  });
 });
