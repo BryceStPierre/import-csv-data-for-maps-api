@@ -80,10 +80,11 @@ $(() => {
     if ($('#fieldsForm').get(0).checkValidity() === false) {
       $('#fieldsForm').addClass('was-validated');
     } else {
-      store('progress', 0);
+      $('.form-control, .custom-control-input').prop('disabled', true);
 
       const data = retrieve('data');
       const config = retrieve('config');
+      store('progress', 0);
 
       geocode(transform(data, config), (err, geocodedData) => {
         if (err || !geocodedData)
