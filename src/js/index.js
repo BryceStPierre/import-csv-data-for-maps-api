@@ -13,7 +13,10 @@ import {
   returnToFieldsSection
 } from './interactions/navigation';
 
-import { handleFileInput } from './interactions/file';
+import { 
+  handleFileInput, 
+  setFileLabel
+} from './interactions/file';
 
 import {
   populateGeocodingFields,
@@ -41,13 +44,14 @@ $(() => {
    * Import Section
    */
   $('#fileInput').change(e => {
-    handleFileInput(e, (err, csv) => {
-      if (err || !csv)
-        return;
+    handleFileInput(e, (err, name, contents) => {
+      if (err || !contents)
+        return setFileLabel('Invalid file format, or file is too short.');
 
-      store('fields', csv.fields);
-      store('data', csv.data);
+      store('fields', contents.fields);
+      store('data', contents.data);
       $('#importButton').prop('disabled', false);
+      $('#fileSummarySpan').html(`<b>${contents.data.length}</b> rows from <b>${name}</b>`);
     });
   });
 

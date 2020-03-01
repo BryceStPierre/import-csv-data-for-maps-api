@@ -40,7 +40,7 @@
     <!-- Select Fields Section -->
     <section id="fieldsSection" class="jumbotron" style="display:none">
       <h1 class="display-5">Select Fields</h1>
-      <p class="lead">Choose the required and optional columns you want to use.</p>
+      <p class="lead">Choose the required geocoding fields and optional data fields to include.</p>
       <form id="fieldsForm" novalidate>
         <div class="form-group row">
           <label for="addressInput" class="col-form-label col-sm-4">Address</label>
@@ -79,13 +79,14 @@
         </div>
         <fieldset class="form-group">
           <div class="row">
-            <legend class="col-form-label col-sm-4">Data Fields</legend>
+            <legend class="col-form-label col-sm-4">Data Fields <i>(Optional)</i></legend>
             <div id="dataFieldsContainer" class="col-sm-6 mt-1"></div>
           </div>
         </fieldset>
 
         <hr class="my-4">
-        <p>When you're ready, click the button below to geocode the data and load your map.</p>
+        <p>When you're ready, click the button below to geocode <span id="fileSummarySpan"></span> and load your map.
+        </p>
         <div id="progressBarContainer" class="progress mb-4" style="display:none">
           <div id="progressBar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
             style="width:0%">0%</div>
