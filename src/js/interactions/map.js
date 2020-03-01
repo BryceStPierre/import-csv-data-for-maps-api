@@ -1,6 +1,8 @@
 import $ from 'jquery';
 
 import { retrieve, store } from '../utils/storage';
+import { jsonAsText } from '../utils/string';
+import { alphabet } from '../utils/array';
 
 export const createMap = () => {
   const data = retrieve('data');
@@ -16,12 +18,9 @@ export const createMap = () => {
     document.getElementById('map'),
     mapOptions
   );
-  let directionsRenderer = new google.maps.DirectionsRenderer({
-    preserveViewport: true
-  });
-  directionsRenderer.addListener('directions_changed', () => {
-    console.log('Directions changed.');
-  })
+
+  let directionsRenderer = new google.maps.DirectionsRenderer({ preserveViewport: true });
+  directionsRenderer.addListener('directions_changed', handleDirectionsChanged);
   directionsRenderer.setMap(map);
 
   data.forEach((d, i) => {
@@ -58,6 +57,15 @@ export const createMap = () => {
   return map;
 };
 
+const pushRouteLocation = index => {
+  let route = retrieve('route');
+  if (!route)
+    route = [];
+
+  route.push(index);
+  store('route', route);
+};
+
 const renderDirections = (directionsRenderer, map) => {
   const route = retrieve('route');
   if (!route)
@@ -92,11 +100,23 @@ const renderDirections = (directionsRenderer, map) => {
   });
 }
 
-const pushRouteLocation = index => {
-  let route = retrieve('route');
-  if (!route)
-    route = [];
+const handleDirectionsChanged = () => {
+  const route = retrieve('route');
+  const data = retrieve('data');
 
-  route.push(index);
-  store('route', route);
-}
+  $('#locationTableBody').html('');
+  route.forEach((index, i) => {
+    let $tr = $('<tr />');
+
+    let $td1 = $('<td />')
+      .attr('scope', 'row')
+      .text(alphabet[i]);
+    let $td2 = $('<td />').text(data[index].addressString);
+    let $td3 = $('<td />').text(jsonAsText(data[index].data));
+
+    $tr.append($td1);
+    $tr.append($td2);
+    $tr.append($td3);
+    $('#locationTableBody').append($tr);
+  });
+};
