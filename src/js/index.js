@@ -53,8 +53,8 @@ $(() => {
       if (err)
         return $('#csvFileLabel').text(err);
 
-      store('fields', contents.fields);
       store('data', contents.data);
+      store('fields', contents.fields);
 
       $('#csvFileLabel').text(`File: ${filename}`);
       $('#jsonFileLabel').text('Choose JSON file...');
