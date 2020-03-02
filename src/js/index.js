@@ -14,9 +14,9 @@ import {
 } from './interactions/navigation';
 
 import { 
-  handleFileInput, 
-  setFileLabel
-} from './interactions/file';
+  handleCsvFileChange, 
+  handleJsonFileChange
+} from './interactions/import';
 
 import {
   populateGeocodingFields,
@@ -45,20 +45,42 @@ $(() => {
   /*
    * Import Section
    */
-  $('#fileInput').change(e => {
-    handleFileInput(e, (err, name, contents) => {
-      if (err || !contents)
-        return setFileLabel('Invalid file format, or file is too short.');
+  $('#csvFileInput').change(e => {
+    handleCsvFileChange(e, (err, filename, contents) => {
+      if (err)
+        return $('#csvFileLabel').text(err);
 
       store('fields', contents.fields);
       store('data', contents.data);
+
+      $('#csvFileLabel').text(`File: ${filename}`);
+      $('#jsonFileLabel').text('Choose CSV file...');
+      $('#jsonFileInput').val('');
+
       $('#importButton').prop('disabled', false);
-      $('#fileSummarySpan').html(`<b>${contents.data.length}</b> rows from <b>${name}</b>`);
+      $('#fileSummarySpan').html(`<b>${contents.data.length}</b> rows from <b>${filename}</b>`);
+    });
+  });
+
+  $('#jsonFileInput').change(e => {
+    handleJsonFileChange(e, (err, filename, contents) => {
+      if (err)
+        return $('#jsonFileLabel').text(err);
+
+      //console.log(contents);
+      store('data', contents.data);
+
+      $('#jsonFileLabel').text(`File: ${filename}`);
+      $('#csvFileLabel').text('Choose JSON file...');
+      $('#csvFileInput').val('');
+
+      $('#importButton').prop('disabled', false);
     });
   });
 
   $('#importButton').click(() => {
-    $('#fileInput').prop('disabled', true);
+    $('#jsonFileInput').prop('disabled', true);
+    $('#csvFileInput').prop('disabled', true);
     goToFieldsSection();
     populateGeocodingFields();
     populateDataFields();
@@ -106,10 +128,5 @@ $(() => {
    * Route Section
    */
   $('#fieldsReturnButton').click(returnToFieldsSection);
-  $('#exportPdfButton').click(() => {
-    exportPdfReport();
-  });
-  $('#exportJsonButton').click(() => {
-    exportJsonData();
-  });
+  $('#exportPdfButton').click(exportPdfReport);
 });

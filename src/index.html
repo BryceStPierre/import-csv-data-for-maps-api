@@ -24,11 +24,24 @@
     <!-- Import Data Section -->
     <section id="importSection" class="jumbotron" style="display:none">
       <h1 class="display-5">Import Data</h1>
-      <p class="lead">Select a CSV file to parse and use with a map.</p>
-      <div class="input-group mb-3">
-        <div class="custom-file">
-          <input id="fileInput" type="file" class="custom-file-input" accept=".csv" required>
-          <label id="fileLabel" class="custom-file-label" for="fileInput">Choose file...</label>
+      <div class="row">
+        <div class="col">
+          <p class="lead">Select a CSV file to parse and use with a map.</p>
+          <div class="input-group mb-3">
+            <div class="custom-file">
+              <input id="csvFileInput" type="file" class="custom-file-input" accept="text/csv" required>
+              <label id="csvFileLabel" class="custom-file-label" for="csvFileInput">Choose CSV file...</label>
+            </div>
+          </div>
+        </div>
+        <div class="col">
+          <p class="lead">Or, select a JSON file to open a saved map.</p>
+          <div class="input-group mb-3">
+            <div class="custom-file">
+              <input id="jsonFileInput" type="file" class="custom-file-input" accept="application/json" required>
+              <label id="jsonFileLabel" class="custom-file-label" for="jsonFileInput">Choose JSON file...</label>
+            </div>
+          </div>
         </div>
       </div>
       <hr class="my-4">
