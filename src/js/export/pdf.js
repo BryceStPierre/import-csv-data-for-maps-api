@@ -13,7 +13,7 @@ export const exportPdfReport = () => {
   let pdf = new jsPDF('p', 'px', 'letter');
   pdf.setProperties({ title });
 
-  let y = 16;
+  let y = 32;
   pdf.setFontSize(16);
   pdf.text(title, marginX, y);
 
