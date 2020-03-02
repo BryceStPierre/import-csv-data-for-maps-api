@@ -54,7 +54,7 @@ $(() => {
       store('data', contents.data);
 
       $('#csvFileLabel').text(`File: ${filename}`);
-      $('#jsonFileLabel').text('Choose CSV file...');
+      $('#jsonFileLabel').text('Choose JSON file...');
       $('#jsonFileInput').val('');
 
       $('#importButton').prop('disabled', false);
@@ -71,7 +71,7 @@ $(() => {
       store('data', contents.data);
 
       $('#jsonFileLabel').text(`File: ${filename}`);
-      $('#csvFileLabel').text('Choose JSON file...');
+      $('#csvFileLabel').text('Choose CSV file...');
       $('#csvFileInput').val('');
 
       $('#importButton').prop('disabled', false);
