@@ -1,6 +1,7 @@
 import $ from 'jquery';
 
 import { retrieve } from '../utils/storage';
+import { dateAsYYYYMMDD } from '../utils/date';
 
 export const embedJsonData = () => {
   const json = {
@@ -9,9 +10,7 @@ export const embedJsonData = () => {
   };
   const encodedJson = encodeURIComponent(JSON.stringify(json));
 
-  const date = new Date();
-  const filename = `map-${date.toISOString().split('T')[0]}`;
-
-  $('#exportJsonButton').attr('download', `${filename}.json`);
+  const filename = `map-data-${dateAsYYYYMMDD()}.json`;
+  $('#exportJsonButton').attr('download', filename);
   $('#exportJsonButton').attr('href', `data:text/json;charset=utf-8,${encodedJson}`);
 }

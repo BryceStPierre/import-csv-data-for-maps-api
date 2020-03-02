@@ -1,3 +1,21 @@
+import jsPDF from 'jspdf';
+import 'jspdf-autotable';
+
+import { dateAsYYYYMMDD } from '../utils/date';
+
+const marginX = 10;
+
 export const exportPdfReport = () => {
-  console.log('Save PDF report.');
+  const date = dateAsYYYYMMDD();
+  const title = `Report - ${date}`
+  const filename = `report-${date}.pdf`;
+
+  let pdf = new jsPDF('p', 'px', 'letter');
+  pdf.setProperties({ title });
+
+  let y = 16;
+  pdf.setFontSize(16);
+  pdf.text(title, marginX, y);
+
+  pdf.save(filename);
 }
