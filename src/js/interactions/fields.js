@@ -32,7 +32,7 @@ export const populateGeocodingFields = () => {
 };
 
 export const setGeocodingField = (name, fieldName) => {
-  let config = Object.assign({}, retrieve('config'));
+  let config = retrieve('config');
   config.fields.geocoding[name] = fieldName;
   store('config', config);
 };
@@ -83,13 +83,13 @@ export const populateDataFields = () => {
 };
 
 const addDataField = fieldName => {
-  let config = Object.assign({}, retrieve('config'));
+  let config = retrieve('config');
   config.fields.data.push(fieldName);
   store('config', config);
 };
 
 const removeDataField = fieldName => {
-  let config = Object.assign({}, retrieve('config'));
+  let config = retrieve('config');
 
   let index = config.fields.data.findIndex(f => f === fieldName);
   if (index !== -1)
