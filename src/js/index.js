@@ -30,7 +30,7 @@ import {
 
 import { geocode } from './data/geocode';
 import { transform } from './data/transform';
-import { exportJsonData } from './export/json';
+import { embedJsonData } from './export/json';
 import { exportPdfReport } from './export/pdf';
 
 $(() => {
@@ -96,6 +96,7 @@ $(() => {
         store('data', geocodedData);
         store('route', []);
         createMap();
+        embedJsonData();
         goToRouteSection();
       });
     }

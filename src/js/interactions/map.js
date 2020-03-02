@@ -4,6 +4,8 @@ import { retrieve, store } from '../utils/storage';
 import { jsonAsText } from '../utils/string';
 import { alphabet } from '../utils/array';
 
+import { embedJsonData } from '../export/json';
+
 export const createMap = () => {
   const data = retrieve('data');
   let mapOptions = {
@@ -103,6 +105,8 @@ const renderDirections = (directionsRenderer, map) => {
 const handleDirectionsChanged = () => {
   const route = retrieve('route');
   const data = retrieve('data');
+
+  embedJsonData();
 
   $('#locationTableBody').html('');
   route.forEach((index, i) => {
