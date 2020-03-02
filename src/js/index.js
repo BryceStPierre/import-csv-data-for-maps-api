@@ -9,6 +9,7 @@ import {
   goToImportSection,
   goToFieldsSection,
   goToRouteSection,
+  skipToRouteSection,
   returnToImportSection,
   returnToFieldsSection
 } from './interactions/navigation';
@@ -25,7 +26,9 @@ import {
 } from './interactions/fields';
 
 import {
-  createMap
+  createMap,
+  renderDirections,
+  handleDirectionsChanged
 } from './interactions/map';
 
 import { geocode } from './data/geocode';
@@ -67,8 +70,8 @@ $(() => {
       if (err)
         return $('#jsonFileLabel').text(err);
 
-      //console.log(contents);
       store('data', contents.data);
+      store('route', contents.route);
 
       $('#jsonFileLabel').text(`File: ${filename}`);
       $('#csvFileLabel').text('Choose CSV file...');
@@ -79,11 +82,24 @@ $(() => {
   });
 
   $('#importButton').click(() => {
-    $('#jsonFileInput').prop('disabled', true);
     $('#csvFileInput').prop('disabled', true);
-    goToFieldsSection();
-    populateGeocodingFields();
-    populateDataFields();
+    $('#jsonFileInput').prop('disabled', true);
+
+    const isCsv = $('#csvFileInput').val() ? true : false;
+    const isJson = $('#jsonFileInput').val() ? true : false;
+
+    if (isCsv) {
+      populateGeocodingFields();
+      populateDataFields();
+      goToFieldsSection();
+    } else if (isJson) {
+      let map = createMap();
+      let directionsRenderer = new google.maps.DirectionsRenderer({ preserveViewport: true });
+      renderDirections(directionsRenderer, map);
+      handleDirectionsChanged();
+      embedJsonData();
+      skipToRouteSection();
+    }
   });
 
   /*

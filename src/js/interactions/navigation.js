@@ -15,6 +15,11 @@ export const returnToImportSection = () => {
   $('#importSection').show();
 }
 
+export const skipToRouteSection = () => {
+  $('#importSection').hide();
+  $('#routeSection').show();
+}
+
 export const goToRouteSection = () => {
   $('#fieldsSection').hide();
   $('#routeSection').show();

@@ -68,7 +68,7 @@ const pushRouteLocation = index => {
   store('route', route);
 };
 
-const renderDirections = (directionsRenderer, map) => {
+export const renderDirections = (directionsRenderer, map) => {
   const route = retrieve('route');
   if (!route)
     return directionsRenderer.setMap(null);
@@ -102,7 +102,7 @@ const renderDirections = (directionsRenderer, map) => {
   });
 }
 
-const handleDirectionsChanged = () => {
+export const handleDirectionsChanged = () => {
   const route = retrieve('route');
   const data = retrieve('data');
 
