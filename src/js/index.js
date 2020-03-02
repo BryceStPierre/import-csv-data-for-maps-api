@@ -107,11 +107,9 @@ $(() => {
     } else {
       $('.form-control, .custom-control-input').prop('disabled', true);
 
-      const data = retrieve('data');
-      const config = retrieve('config');
       store('progress', 0);
 
-      geocode(transform(data, config), (err, geocodedData) => {
+      geocode(transform(), (err, geocodedData) => {
         if (err || !geocodedData)
           return;
 

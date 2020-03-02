@@ -1,6 +1,10 @@
 import { addressAsString } from '../utils/string';
+import { retrieve } from '../utils/storage';
 
-export const transform = (rawData, config) => {
+export const transform = () => {
+  const rawData = retrieve('data');
+  const config = retrieve('config');
+
   const geocodingFields = config.fields.geocoding;
   const dataFields = config.fields.data;
 
