@@ -13,12 +13,8 @@ export const geocode = (data, callback) => {
 
   Promise
     .all(promises)
-    .then(geocodedData => {
-      return callback(null, geocodedData.filter(d => d.latLng !== null))
-    })
-    .catch(err => {
-      return callback(err, null)
-    });
+    .then(geocodedData => callback(null, geocodedData.filter(d => d.latLng !== null)))
+    .catch(err => callback(err, null));
 };
 
 const geocoderPromise = (geocoder, object, increment, seconds) => {
