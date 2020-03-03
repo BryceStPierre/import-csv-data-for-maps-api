@@ -13,3 +13,10 @@ export const incrementProgressBar = increment => {
 
   store('progress', progress);
 };
+
+export const resetProgressBar = () => {
+  store('progress', 0);
+  $('#progressBar').css('width', '0%');
+  $('#progressBar').text('0%');
+  $('#progressBarContainer').hide();
+};

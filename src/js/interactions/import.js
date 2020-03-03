@@ -1,3 +1,5 @@
+import $ from 'jquery';
+
 import { 
   parseCsv, 
   parseJson 
@@ -31,4 +33,13 @@ export const handleJsonFileChange = (e, callback) => {
   fileReader.onload = e => callback(null, file.name, parseJson(e.target.result));
   fileReader.onerror = err => callback(err, null, null);
   fileReader.readAsText(file);
+};
+
+export const resetImportFields = () => {
+  $('#csvFileLabel').text('Choose CSV file...');
+  $('#csvFileInput').prop('disabled', false);
+  $('#csvFileInput').val('');
+  $('#jsonFileLabel').text('Choose JSON file...');
+  $('#jsonFileInput').prop('disabled', false);
+  $('#jsonFileInput').val('');
 };

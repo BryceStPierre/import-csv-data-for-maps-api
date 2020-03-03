@@ -14,22 +14,26 @@ import {
   returnToFieldsSection
 } from './interactions/navigation';
 
-import { 
-  handleCsvFileChange, 
-  handleJsonFileChange
-} from './interactions/import';
-
 import {
   populateGeocodingFields,
   populateDataFields,
   setGeocodingField
 } from './interactions/fields';
 
+
+import { 
+  handleCsvFileChange, 
+  handleJsonFileChange,
+  resetImportFields
+} from './interactions/import';
+
 import {
   createMap,
   renderDirections,
   handleDirectionsChanged
 } from './interactions/map';
+
+import { resetProgressBar } from './interactions/progress';
 
 import { geocode } from './data/geocode';
 import { transform } from './data/transform';
@@ -115,13 +119,13 @@ $(() => {
     populateDataFields();
   });
 
-  $('#importReturnButton').click(returnToImportSection);
-
   $('#plotButton').click(() => {
     if ($('#fieldsForm').get(0).checkValidity() === false) {
       $('#fieldsForm').addClass('was-validated');
     } else {
       $('.form-control, .custom-control-input').prop('disabled', true);
+      $('#importReturnButton').prop('disabled', true);
+      $('#plotButton').prop('disabled', true);
 
       store('progress', 0);
 
@@ -136,11 +140,23 @@ $(() => {
         goToRouteSection();
       });
     }
-  })
+  });
+
+  $('#importReturnButton').click(() => {
+    resetImportFields();
+    returnToImportSection();
+  });
 
   /*
    * Route Section
    */
-  $('#fieldsReturnButton').click(returnToFieldsSection);
   $('#exportPdfButton').click(exportPdfReport);
+
+  $('#fieldsReturnButton').click(() => {
+    $('.form-control, .custom-control-input').prop('disabled', false);
+    $('#importReturnButton').prop('disabled', false);
+    $('#plotButton').prop('disabled', false);
+    resetProgressBar();
+    returnToFieldsSection();
+  });
 });
