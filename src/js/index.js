@@ -3,7 +3,7 @@ import $ from 'jquery';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../style.css';
 
-import { store, retrieve } from './utils/storage';
+import { store } from './utils/storage';
 
 import {
   goToImportSection,
@@ -14,18 +14,18 @@ import {
   returnToFieldsSection
 } from './interactions/navigation';
 
-import {
-  populateGeocodingFields,
-  populateDataFields,
-  setGeocodingField
-} from './interactions/fields';
-
-
 import { 
   handleCsvFileChange, 
   handleJsonFileChange,
   resetImportFields
 } from './interactions/import';
+
+import {
+  populateGeocodingFields,
+  populateDataFields,
+  setGeocodingField,
+  setFieldsDisabled
+} from './interactions/fields';
 
 import {
   createMap,
@@ -63,8 +63,8 @@ $(() => {
       $('#csvFileLabel').text(`File: ${filename}`);
       $('#jsonFileLabel').text('Choose JSON file...');
       $('#jsonFileInput').val('');
-
       $('#importButton').prop('disabled', false);
+      
       $('#fileSummarySpan').html(`<b>${contents.data.length}</b> rows from <b>${filename}</b>`);
     });
   });
@@ -80,7 +80,6 @@ $(() => {
       $('#jsonFileLabel').text(`File: ${filename}`);
       $('#csvFileLabel').text('Choose CSV file...');
       $('#csvFileInput').val('');
-
       $('#importButton').prop('disabled', false);
     });
   });
@@ -97,9 +96,10 @@ $(() => {
       populateDataFields();
       goToFieldsSection();
     } else if (isJson) {
-      let map = createMap();
-      let directionsRenderer = new google.maps.DirectionsRenderer({ preserveViewport: true });
-      renderDirections(directionsRenderer, map);
+      renderDirections(
+        new google.maps.DirectionsRenderer({ preserveViewport: true }), 
+        createMap()
+      );
       handleDirectionsChanged();
       embedJsonData();
       skipToRouteSection();
@@ -123,11 +123,8 @@ $(() => {
     if ($('#fieldsForm').get(0).checkValidity() === false) {
       $('#fieldsForm').addClass('was-validated');
     } else {
-      $('.form-control, .custom-control-input').prop('disabled', true);
-      $('#importReturnButton').prop('disabled', true);
-      $('#plotButton').prop('disabled', true);
-
       store('progress', 0);
+      setFieldsDisabled(true);
 
       geocode(transform(), (err, geocodedData) => {
         if (err || !geocodedData)
@@ -153,9 +150,7 @@ $(() => {
   $('#exportPdfButton').click(exportPdfReport);
 
   $('#fieldsReturnButton').click(() => {
-    $('.form-control, .custom-control-input').prop('disabled', false);
-    $('#importReturnButton').prop('disabled', false);
-    $('#plotButton').prop('disabled', false);
+    setFieldsDisabled(false);
     resetProgressBar();
     returnToFieldsSection();
   });

@@ -97,3 +97,9 @@ const removeDataField = fieldName => {
 
   store('config', config);
 };
+
+export const setFieldsDisabled = disabled => {
+  $('.form-control, .custom-control-input').prop('disabled', disabled);
+  $('#importReturnButton').prop('disabled', disabled);
+  $('#plotButton').prop('disabled', disabled);
+};
