@@ -7,16 +7,14 @@ import { jsonAsText } from '../utils/string';
 import { dateAsYYYYMMDD } from '../utils/date';
 
 const marginX = 10;
-const marginY = 16;
-const line = '_______________________________';
+const marginY = 20;
 
 export const exportPdfReport = () => {
-  const date = dateAsYYYYMMDD();
-  const title = `Report - ${date}`
-  const filename = `report-${date}.pdf`;
-
   const data = retrieve('data');
   const route = retrieve('route');
+
+  const title = `Report - ${dateAsYYYYMMDD()}`
+  const filename = `report-${dateAsYYYYMMDD()}.pdf`;
 
   let pdf = new jsPDF('p', 'px', 'letter');
   pdf.setProperties({ title });
@@ -25,33 +23,60 @@ export const exportPdfReport = () => {
   pdf.setFontSize(16);
   pdf.text(title, marginX, y);
 
-  y += 24;
-  pdf.setFontSize(12);
+  y += 20;
+  pdf.setFontSize(14);
   pdf.text('Route', marginX, y);
-  
+
   const tableHead = [[
-    'Location', 
-    'Details',
-    'Data',
-    'Notes'
+    'Location',
+    'Address',
+    'Data'
   ]];
 
-  let tableBody = [];
-  route.forEach((index, i) => {
-    tableBody.push([
+  const tableBody = route.map((index, i) => {
+    return [
       alphabet[i],
       data[index].addressString,
-      jsonAsText(data[index].data),
-      line
-    ]);
+      jsonAsText(data[index].data)
+    ];
   });
 
-  y += 16;
+  y += 8;
+  pdf.setFontSize(12);
   pdf.autoTable({
     startY: y,
     head: tableHead,
-    body: tableBody, 
+    body: tableBody,
     theme: 'plain'
+  });
+
+  y = pdf.previousAutoTable.finalY + 16;
+  pdf.setFontSize(14);
+  pdf.text('Directions', marginX, y);
+
+  y += 16;
+  pdf.setFontSize(11);
+  pdf.text('Click any of the address hyperlinks below to start directions through Google Maps:', marginX, y);
+
+  let sectionMarginX = marginX + 25;
+
+  y += 20;
+  pdf.setFontSize(10);
+  route.forEach((index, i) => {
+    if (y > pdf.internal.pageSize.getHeight()) {
+      pdf.addPage();
+      y = marginY;
+    }
+
+    pdf.setTextColor('#000');
+    pdf.text(alphabet[i], sectionMarginX, y);
+
+    pdf.setTextColor('#00F');
+    pdf.textWithLink(data[index].addressString, sectionMarginX + 30, y, {
+      url: encodeURI(`https://www.google.com/maps/dir/?api=1&destination=${data[index].addressString}`)
+    });
+    
+    y += 16;
   });
 
   pdf.save(filename);
