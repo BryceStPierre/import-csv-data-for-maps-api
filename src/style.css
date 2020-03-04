@@ -7,6 +7,26 @@ body {
   height: 400px;
 }
 
+.map-button {
+  background-color: #fff;
+  border: 2px solid #fff;
+  border-radius: 2px;
+  box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 4px -1px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+.map-button-text {
+  color: #666;
+  font-family: 'Roboto', Arial, sans-serif;
+  font-size: 16px;
+  line-height: 34px;
+  padding: 0px 5px;
+}
+.map-button-text:hover {
+  color: #191919;
+}
+
 #locationTableBody {
   font-size: 0.9rem;
 }

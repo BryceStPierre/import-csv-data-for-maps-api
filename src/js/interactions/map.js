@@ -56,8 +56,30 @@ export const createMap = () => {
     bounds.extend(d.latLng);
   });
   map.fitBounds(bounds);
+
+  let resetControlDiv = document.createElement('div');
+  let resetControl = new ResetControl(resetControlDiv);
+  resetControlDiv.index = 1;
+  map.controls[google.maps.ControlPosition.TOP_LEFT].push(resetControlDiv);
+
   return map;
 };
+
+const ResetControl = div => {
+  let resetControl = document.createElement('div');
+  resetControl.className = 'map-button';
+  resetControl.title = 'Click to reset route.';
+  div.appendChild(resetControl);
+  
+  let resetText = document.createElement('div');
+  resetText.className = 'map-button-text';
+  resetText.innerHTML = 'Reset Route';
+  resetControl.appendChild(resetText);
+
+  resetControl.addEventListener('click', () => {
+    // TODO: Add click actions.
+  });
+}
 
 const pushRouteLocation = index => {
   let route = retrieve('route');
