@@ -77,7 +77,8 @@ const ResetControl = div => {
   resetControl.appendChild(resetText);
 
   resetControl.addEventListener('click', () => {
-    // TODO: Add click actions.
+    store('route', []);
+    createMap();
   });
 }
 
