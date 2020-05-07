@@ -1,159 +1,246 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title><%= htmlWebpackPlugin.options.title %></title>
+  </head>
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title><%= htmlWebpackPlugin.options.title %></title>
-</head>
-
-<body>
-  <div class="container-fluid">
-
-    <!-- Home Section -->
-    <section id="homeSection" class="jumbotron">
-      <h1 class="display-5"><%= htmlWebpackPlugin.options.title %></h1>
-      <p class="lead">Use your spreadsheet data, plot the locations on the map, plan a route, and generate a
-        report.</p>
-      <hr class="my-4">
-      <p>When you're ready, click the button below to continue.</p>
-      <button id="getStartedButton" class="btn btn-primary">Get Started</button>
-    </section>
-
-    <!-- Import Data Section -->
-    <section id="importSection" class="jumbotron" style="display:none">
-      <h1 class="display-5">Import Data</h1>
-      <div class="row">
-        <div class="col">
-          <p class="lead">Select a CSV file to parse and use with a map.</p>
-          <div class="input-group mb-3">
-            <div class="custom-file">
-              <input id="csvFileInput" type="file" class="custom-file-input" accept=".csv" required>
-              <label id="csvFileLabel" class="custom-file-label" for="csvFileInput">Choose CSV file...</label>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <p class="lead">Or select a JSON file to open a saved map.</p>
-          <div class="input-group mb-3">
-            <div class="custom-file">
-              <input id="jsonFileInput" type="file" class="custom-file-input" accept="application/json" required>
-              <label id="jsonFileLabel" class="custom-file-label" for="jsonFileInput">Choose JSON file...</label>
-            </div>
-          </div>
-        </div>
-      </div>
-      <hr class="my-4">
-      <p>When you're ready, click the button below to import your data.</p>
-      <button id="importButton" class="btn btn-primary">Import</button>
-    </section>
-
-    <!-- Select Fields Section -->
-    <section id="fieldsSection" class="jumbotron" style="display:none">
-      <h1 class="display-5">Select Fields</h1>
-      <p class="lead">Choose required geocoding fields and also any data fields to include.</p>
-      <form id="fieldsForm" novalidate>
-        <div class="form-group row">
-          <label for="addressInput" class="col-form-label col-sm-4">Address</label>
-          <div class="col-sm-6">
-            <select id="addressInput" name="address" class="form-control" required></select>
-            <div class="invalid-feedback">Please choose a field for address.</div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="cityInput" class="col-form-label col-sm-4">City</label>
-          <div class="col-sm-6">
-            <select id="cityInput" name="city" class="form-control" required></select>
-            <div class="invalid-feedback">Please choose a field for city.</div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="provinceInput" class="col-form-label col-sm-4">Province</label>
-          <div class="col-sm-6">
-            <select id="provinceInput" name="province" class="form-control" required></select>
-            <div class="invalid-feedback">Please choose a field for province.</div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="postalCodeInput" class="col-form-label col-sm-4">Postal Code</label>
-          <div class="col-sm-6">
-            <select id="postalCodeInput" name="postalCode" class="form-control" required></select>
-            <div class="invalid-feedback">Please choose a field for postal code.</div>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="countryInput" class="col-form-label col-sm-4">Country</label>
-          <div class="col-sm-6">
-            <select id="countryInput" name="country" class="form-control" required></select>
-            <div class="invalid-feedback">Please choose a field for country.</div>
-          </div>
-        </div>
-        <fieldset class="form-group">
-          <div class="row">
-            <legend class="col-form-label col-sm-4">Data Fields <small><i>(Optional)</i></small></legend>
-            <div id="dataFieldsContainer" class="col-sm-6 mt-1"></div>
-          </div>
-        </fieldset>
-
-        <hr class="my-4">
-        <p>When you're ready, click the button below to geocode <span id="fileSummarySpan"></span> and load your map.
+  <body>
+    <div class="container-fluid">
+      <!-- Home Section -->
+      <section id="homeSection" class="jumbotron">
+        <h1 class="display-5"><%= htmlWebpackPlugin.options.title %></h1>
+        <p class="lead">
+          Use your spreadsheet data, plot the locations on the map, plan a
+          route, and generate a report.
         </p>
-        <div id="progressBarContainer" class="progress mb-4" style="display:none">
-          <div id="progressBar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
-            style="width:0%">0%</div>
-        </div>
-        <button id="importReturnButton" class="btn btn-danger">Back</button>
-        <button id="plotButton" class="btn btn-primary">Plot</button>
-      </form>
-    </section>
+        <hr class="my-4" />
+        <p>When you're ready, click the button below to continue.</p>
+        <button id="getStartedButton" class="btn btn-primary">
+          Get Started
+        </button>
+      </section>
 
-    <!-- Plan Route Section -->
-    <section id="routeSection" class="jumbotron" style="display:none">
-      <div class="row">
-        <div class="col">
-          <h1 class="display-5">Plan Route</h1>
-          <p class="lead">Select the locations in order to create your directions.</p>
-          <div id="map"></div>
-          <div class="row mt-4">
-            <div class="col">
-              <b>Selected Location</b>
-              <pre id="locationPre">No location to show.</pre>
+      <!-- Import Data Section -->
+      <section id="importSection" class="jumbotron" style="display: none;">
+        <h1 class="display-5">Import Data</h1>
+        <div class="row">
+          <div class="col">
+            <p class="lead">Select a CSV file to parse and use with a map.</p>
+            <div class="input-group mb-3">
+              <div class="custom-file">
+                <input
+                  id="csvFileInput"
+                  type="file"
+                  class="custom-file-input"
+                  accept=".csv"
+                  required
+                />
+                <label
+                  id="csvFileLabel"
+                  class="custom-file-label"
+                  for="csvFileInput"
+                  >Choose CSV file...</label
+                >
+              </div>
             </div>
-            <div class="col">
-              <b>Selected Data</b>
-              <pre id="dataPre">No data to show.</pre>
+          </div>
+          <div class="col">
+            <p class="lead">Or select a JSON file to open a saved map.</p>
+            <div class="input-group mb-3">
+              <div class="custom-file">
+                <input
+                  id="jsonFileInput"
+                  type="file"
+                  class="custom-file-input"
+                  accept="application/json"
+                  required
+                />
+                <label
+                  id="jsonFileLabel"
+                  class="custom-file-label"
+                  for="jsonFileInput"
+                  >Choose JSON file...</label
+                >
+              </div>
             </div>
           </div>
         </div>
-        <div class="col">
-          <table class="table table-sm">
-            <thead class="thead-dark">
-              <tr>
-                <th scope="col">Location</th>
-                <th scope="col">Address</th>
-                <th scope="col">Data</th>
-              </tr>
-            </thead>
-            <tbody id="locationTableBody">
-              <tr>
-                <td colspan="3">No directions to show.</td>
-              </tr>
-            </tbody>
-          </table>
+        <hr class="my-4" />
+        <p>When you're ready, click the button below to import your data.</p>
+        <button id="importButton" class="btn btn-primary">Import</button>
+      </section>
+
+      <!-- Select Fields Section -->
+      <section id="fieldsSection" class="jumbotron" style="display: none;">
+        <h1 class="display-5">Select Fields</h1>
+        <p class="lead">
+          Choose required geocoding fields and also any data fields to include.
+        </p>
+        <form id="fieldsForm" novalidate>
+          <div class="form-group row">
+            <label for="addressInput" class="col-form-label col-sm-4"
+              >Address</label
+            >
+            <div class="col-sm-6">
+              <select
+                id="addressInput"
+                name="address"
+                class="form-control"
+                required
+              ></select>
+              <div class="invalid-feedback">
+                Please choose a field for address.
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="cityInput" class="col-form-label col-sm-4">City</label>
+            <div class="col-sm-6">
+              <select
+                id="cityInput"
+                name="city"
+                class="form-control"
+                required
+              ></select>
+              <div class="invalid-feedback">
+                Please choose a field for city.
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="provinceInput" class="col-form-label col-sm-4"
+              >Province</label
+            >
+            <div class="col-sm-6">
+              <select
+                id="provinceInput"
+                name="province"
+                class="form-control"
+                required
+              ></select>
+              <div class="invalid-feedback">
+                Please choose a field for province.
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="postalCodeInput" class="col-form-label col-sm-4"
+              >Postal Code</label
+            >
+            <div class="col-sm-6">
+              <select
+                id="postalCodeInput"
+                name="postalCode"
+                class="form-control"
+                required
+              ></select>
+              <div class="invalid-feedback">
+                Please choose a field for postal code.
+              </div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="countryInput" class="col-form-label col-sm-4"
+              >Country</label
+            >
+            <div class="col-sm-6">
+              <select
+                id="countryInput"
+                name="country"
+                class="form-control"
+                required
+              ></select>
+              <div class="invalid-feedback">
+                Please choose a field for country.
+              </div>
+            </div>
+          </div>
+          <fieldset class="form-group">
+            <div class="row">
+              <legend class="col-form-label col-sm-4">
+                Data Fields <small><i>(Optional)</i></small>
+              </legend>
+              <div id="dataFieldsContainer" class="col-sm-6 mt-1"></div>
+            </div>
+          </fieldset>
+
+          <hr class="my-4" />
+          <p>
+            When you're ready, click the button below to geocode
+            <span id="fileSummarySpan"></span> and load your map.
+          </p>
+          <div
+            id="progressBarContainer"
+            class="progress mb-4"
+            style="display: none;"
+          >
+            <div
+              id="progressBar"
+              class="progress-bar progress-bar-striped progress-bar-animated"
+              role="progressbar"
+              style="width: 0%;"
+            >
+              0%
+            </div>
+          </div>
+          <button id="importReturnButton" class="btn btn-danger">Back</button>
+          <button id="plotButton" class="btn btn-primary">Plot</button>
+        </form>
+      </section>
+
+      <!-- Plan Route Section -->
+      <section id="routeSection" class="jumbotron" style="display: none;">
+        <div class="row">
+          <div class="col">
+            <h1 class="display-5">Plan Route</h1>
+            <p class="lead">
+              Select the locations in order to create your directions.
+            </p>
+            <div id="map"></div>
+            <div class="row mt-4">
+              <div class="col">
+                <b>Selected Location</b>
+                <pre id="locationPre">No location to show.</pre>
+              </div>
+              <div class="col">
+                <b>Selected Data</b>
+                <pre id="dataPre">No data to show.</pre>
+              </div>
+            </div>
+          </div>
+          <div class="col">
+            <table class="table table-sm">
+              <thead class="thead-dark">
+                <tr>
+                  <th scope="col">Location</th>
+                  <th scope="col">Address</th>
+                  <th scope="col">Data</th>
+                </tr>
+              </thead>
+              <tbody id="locationTableBody">
+                <tr>
+                  <td colspan="3">No directions to show.</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
         </div>
-      </div>
-      <hr class="my-4">
-      <p>Click one of the buttons below to export a PDF report or export your JSON data.</p>
-      <button id="fieldsReturnButton" class="btn btn-danger">Back</button>
-      <button id="exportPdfButton" class="btn btn-primary">Export PDF</button>
-      <a id="exportJsonButton" class="btn btn-primary" href="#">Export JSON</a>
-    </section>
+        <hr class="my-4" />
+        <p>
+          Click one of the buttons below to export a PDF report or export your
+          JSON data.
+        </p>
+        <button id="fieldsReturnButton" class="btn btn-danger">Back</button>
+        <button id="exportPdfButton" class="btn btn-primary">Export PDF</button>
+        <a id="exportJsonButton" class="btn btn-primary" href="#"
+          >Export JSON</a
+        >
+      </section>
+    </div>
 
-  </div>
-
-  <script
-    src="https://maps.googleapis.com/maps/api/js?key=<%= htmlWebpackPlugin.options.apiKey %>&libraries=places"></script>
-</body>
-
+    <script src="https://maps.googleapis.com/maps/api/js?key=<%= htmlWebpackPlugin.options.apiKey %>&libraries=places"></script>
+  </body>
 </html>

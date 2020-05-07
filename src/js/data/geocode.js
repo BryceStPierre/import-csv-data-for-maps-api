@@ -1,4 +1,4 @@
-import { incrementProgressBar } from '../interactions/progress';
+import { incrementProgressBar } from "../interactions/progress";
 
 export const geocode = (data, callback) => {
   let geocoder = new google.maps.Geocoder();
@@ -6,15 +6,17 @@ export const geocode = (data, callback) => {
 
   let promises = [];
   data.forEach((d, i) => {
-    promises.push(
-      geocoderPromise(geocoder, d, increment, i)
-    );
+    promises.push(geocoderPromise(geocoder, d, increment, i));
   });
 
-  Promise
-    .all(promises)
-    .then(geocodedData => callback(null, geocodedData.filter(d => d.latLng !== null)))
-    .catch(err => callback(err, null));
+  Promise.all(promises)
+    .then((geocodedData) =>
+      callback(
+        null,
+        geocodedData.filter((d) => d.latLng !== null)
+      )
+    )
+    .catch((err) => callback(err, null));
 };
 
 const geocoderPromise = (geocoder, object, increment, seconds) => {
@@ -25,8 +27,9 @@ const geocoderPromise = (geocoder, object, increment, seconds) => {
         o.latLng = null;
 
         if (status === google.maps.GeocoderStatus.OK)
-          o.latLng = results && results.length > 0 ? results[0].geometry.location : null;
-        
+          o.latLng =
+            results && results.length > 0 ? results[0].geometry.location : null;
+
         incrementProgressBar(increment);
         return resolve(o);
       });

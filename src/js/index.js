@@ -1,9 +1,9 @@
-import $ from 'jquery';
+import $ from "jquery";
 
-import 'bootstrap/dist/css/bootstrap.min.css';
-import '../style.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+import "../style.css";
 
-import { store } from './utils/storage';
+import { store } from "./utils/storage";
 
 import {
   goToImportSection,
@@ -11,85 +11,85 @@ import {
   goToRouteSection,
   skipToRouteSection,
   returnToImportSection,
-  returnToFieldsSection
-} from './interactions/navigation';
+  returnToFieldsSection,
+} from "./interactions/navigation";
 
-import { 
-  handleCsvFileChange, 
+import {
+  handleCsvFileChange,
   handleJsonFileChange,
-  resetImportFields
-} from './interactions/import';
+  resetImportFields,
+} from "./interactions/import";
 
 import {
   populateGeocodingFields,
   populateDataFields,
   setGeocodingField,
-  setFieldsDisabled
-} from './interactions/fields';
+  setFieldsDisabled,
+} from "./interactions/fields";
 
 import {
   createMap,
   renderDirections,
-  handleDirectionsChanged
-} from './interactions/map';
+  handleDirectionsChanged,
+} from "./interactions/map";
 
-import { resetProgressBar } from './interactions/progress';
+import { resetProgressBar } from "./interactions/progress";
 
-import { geocode } from './data/geocode';
-import { transform } from './data/transform';
-import { embedJsonData } from './export/json';
-import { exportPdfReport } from './export/pdf';
+import { geocode } from "./data/geocode";
+import { transform } from "./data/transform";
+import { embedJsonData } from "./export/json";
+import { exportPdfReport } from "./export/pdf";
 
 $(() => {
   /*
    * Home Section
    */
-  $('#getStartedButton').click(() => {
+  $("#getStartedButton").click(() => {
     goToImportSection();
-    $('#importButton').prop('disabled', true);
+    $("#importButton").prop("disabled", true);
   });
 
   /*
    * Import Section
    */
-  $('#csvFileInput').change(e => {
+  $("#csvFileInput").change((e) => {
     handleCsvFileChange(e, (err, filename, contents) => {
-      if (err)
-        return $('#csvFileLabel').text(err);
+      if (err) return $("#csvFileLabel").text(err);
 
-      store('data', contents.data);
-      store('fields', contents.fields);
+      store("data", contents.data);
+      store("fields", contents.fields);
 
-      $('#csvFileLabel').text(`File: ${filename}`);
-      $('#jsonFileLabel').text('Choose JSON file...');
-      $('#jsonFileInput').val('');
-      $('#importButton').prop('disabled', false);
-      
-      $('#fileSummarySpan').html(`<b>${contents.data.length}</b> rows from <b>${filename}</b>`);
+      $("#csvFileLabel").text(`File: ${filename}`);
+      $("#jsonFileLabel").text("Choose JSON file...");
+      $("#jsonFileInput").val("");
+      $("#importButton").prop("disabled", false);
+
+      $("#fileSummarySpan").html(
+        `<b>${contents.data.length}</b> rows from <b>${filename}</b>`
+      );
     });
   });
 
-  $('#jsonFileInput').change(e => {
+  $("#jsonFileInput").change((e) => {
     handleJsonFileChange(e, (err, filename, contents) => {
-      if (err)
-        return $('#jsonFileLabel').text(err);
+      if (err) return $("#jsonFileLabel").text(err);
 
-      store('data', contents.data);
-      store('route', contents.route);
+      store("data", contents.data);
+      store("route", contents.route);
 
-      $('#jsonFileLabel').text(`File: ${filename}`);
-      $('#csvFileLabel').text('Choose CSV file...');
-      $('#csvFileInput').val('');
-      $('#importButton').prop('disabled', false);
+      $("#jsonFileLabel").text(`File: ${filename}`);
+      $("#csvFileLabel").text("Choose CSV file...");
+      $("#csvFileInput").val("");
+      $("#importButton").prop("disabled", false);
     });
   });
 
-  $('#importButton').click(() => {
-    $('#csvFileInput').prop('disabled', true);
-    $('#jsonFileInput').prop('disabled', true);
+  $("#importButton").click(() => {
+    $("#csvFileInput").prop("disabled", true);
+    $("#jsonFileInput").prop("disabled", true);
 
-    const isCsv = $('#csvFileInput').val() ? true : false;
-    const isJson = $('#jsonFileInput').val() ? true : false;
+    const isCsv = $("#csvFileInput").val() ? true : false;
+    const isJson = $("#jsonFileInput").val() ? true : false;
 
     if (isCsv) {
       populateGeocodingFields();
@@ -97,7 +97,7 @@ $(() => {
       goToFieldsSection();
     } else if (isJson) {
       renderDirections(
-        new google.maps.DirectionsRenderer({ preserveViewport: true }), 
+        new google.maps.DirectionsRenderer({ preserveViewport: true }),
         createMap()
       );
       handleDirectionsChanged();
@@ -109,29 +109,30 @@ $(() => {
   /*
    * Fields Section
    */
-  $('#fieldsForm').submit(e => {
+  $("#fieldsForm").submit((e) => {
     e.preventDefault();
     e.stopPropagation();
   });
 
-  $('#addressInput, #cityInput, #provinceInput, #postalCodeInput, #countryInput').change(function () {
-    setGeocodingField($(this).attr('name'), $(this).val());
+  $(
+    "#addressInput, #cityInput, #provinceInput, #postalCodeInput, #countryInput"
+  ).change(function () {
+    setGeocodingField($(this).attr("name"), $(this).val());
     populateDataFields();
   });
 
-  $('#plotButton').click(() => {
-    if ($('#fieldsForm').get(0).checkValidity() === false) {
-      $('#fieldsForm').addClass('was-validated');
+  $("#plotButton").click(() => {
+    if ($("#fieldsForm").get(0).checkValidity() === false) {
+      $("#fieldsForm").addClass("was-validated");
     } else {
-      store('progress', 0);
+      store("progress", 0);
       setFieldsDisabled(true);
 
       geocode(transform(), (err, geocodedData) => {
-        if (err || !geocodedData)
-          return;
+        if (err || !geocodedData) return;
 
-        store('data', geocodedData);
-        store('route', []);
+        store("data", geocodedData);
+        store("route", []);
         createMap();
         embedJsonData();
         goToRouteSection();
@@ -139,7 +140,7 @@ $(() => {
     }
   });
 
-  $('#importReturnButton').click(() => {
+  $("#importReturnButton").click(() => {
     resetImportFields();
     returnToImportSection();
   });
@@ -147,9 +148,9 @@ $(() => {
   /*
    * Route Section
    */
-  $('#exportPdfButton').click(exportPdfReport);
+  $("#exportPdfButton").click(exportPdfReport);
 
-  $('#fieldsReturnButton').click(() => {
+  $("#fieldsReturnButton").click(() => {
     setFieldsDisabled(false);
     resetProgressBar();
     returnToFieldsSection();
