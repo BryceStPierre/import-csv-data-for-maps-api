@@ -8,7 +8,7 @@ export const handleCsvFileChange = (e, callback) => {
 
   const file = e.target.files[0];
 
-  if (file.type !== "text/csv")
+  if (file.type !== "text/csv" && !file.name.includes(".csv"))
     return callback("Invalid file type, must be a CSV file.", null, null);
 
   let fileReader = new FileReader();
@@ -24,7 +24,7 @@ export const handleJsonFileChange = (e, callback) => {
 
   const file = e.target.files[0];
 
-  if (file.type !== "application/json")
+  if (file.type !== "application/json" && !file.name.includes(".json"))
     return callback("Invalid file type, must be a JSON file.", null, null);
 
   let fileReader = new FileReader();
