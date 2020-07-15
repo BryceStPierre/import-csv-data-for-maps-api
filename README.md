@@ -1,6 +1,14 @@
-# Using Spreadsheet Data with Google Maps API Tutorial
+# Import CSV Data for Google Maps API (Tutorial)
 
-A single-page app for using spreadsheet data with the Google Maps API. Developed for for my YouTube tutorial.
+A single-page app for importing CSV data into the browser for display with the Google Maps API. The final code from the YouTube tutorial.
+
+## What You Can Learn
+
+- Google Maps JavaScript API (Geocoding API & Directions API)
+- Generating PDFs Client-side
+- JavaScript ES6 Syntax
+- JavaScript Promises
+- HTML5 Web Storage
 
 ## Getting Started
 
@@ -18,8 +26,17 @@ Run `npm run build` to compile and generate build files in `./dist`.
 
 ## Development Tools and Libraries
 
-- Webpack
-- Babel
-- jQuery
-- Bootstrap 4
-- Google Maps JavaScript API
+- [Webpack](https://webpack.js.org/guides/getting-started/#using-a-configuration)
+- [Babel](https://babeljs.io/setup#installation)
+- [jQuery](https://jquery.com/)
+- [Bootstrap 4](https://getbootstrap.com/)
+- [Google Maps JavaScript API](https://developers.google.com/maps/documentation/javascript/reference/)
+- [jsPDF](https://github.com/MrRio/jsPDF)
+- [jsPDF-AutoTable](https://github.com/simonbengtsson/jsPDF-AutoTable)
+
+## Resources
+
+- [jsPDF-AutoTable Examples](https://github.com/simonbengtsson/jsPDF-AutoTable/blob/master/examples/examples.js)
+- [Google Maps URLs](https://developers.google.com/maps/documentation/urls/guide)
+- [Google Maps Geocoding API Query Limit Issue](https://stackoverflow.com/questions/14014074/google-maps-api-over-query-limit-per-second-limit)
+- [Google Maps Geocoding API Queue Solution](https://acleach.me.uk/gmaps/v3/plotaddresses.htm)
