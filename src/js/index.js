@@ -60,6 +60,8 @@ $(() => {
       store("fields", contents.fields);
 
       $("#csvFileLabel").text(`File: ${filename}`);
+      $("#jsonFileLabel").text("Choose JSON file...");
+      $("#jsonFileInput").val("");
       $("#importButton").prop("disabled", false);
 
       $("#fileSummarySpan").html(
@@ -76,6 +78,8 @@ $(() => {
       store("route", contents.route);
 
       $("#jsonFileLabel").text(`File: ${filename}`);
+      $("#csvFileLabel").text("Choose CSV file...");
+      $("#csvFileInput").val("");
       $("#importButton").prop("disabled", false);
     });
   });
