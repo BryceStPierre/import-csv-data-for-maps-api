@@ -2,11 +2,14 @@ import $ from "jquery";
 
 import { parseCsv, parseJson } from "../utils/file";
 
-export const handleCsvFileChange = (e, callback) => {
-  if (e.target.files.length < 1)
+/*
+ * callback(err, filename, contents)
+ */
+export const handleCsvFileChange = (files, callback) => {
+  if (files.length < 1) 
     return callback("Choose CSV file...", null, null);
 
-  const file = e.target.files[0];
+  const file = files[0];
 
   if (file.type !== "text/csv" && !file.name.includes(".csv"))
     return callback("Invalid file type, must be a CSV file.", null, null);
@@ -18,11 +21,14 @@ export const handleCsvFileChange = (e, callback) => {
   fileReader.readAsText(file);
 };
 
-export const handleJsonFileChange = (e, callback) => {
-  if (e.target.files.length < 1)
+/*
+ * callback(err, filename, contents)
+ */
+export const handleJsonFileChange = (files, callback) => {
+  if (files.length < 1) 
     return callback("Choose JSON file...", null, null);
 
-  const file = e.target.files[0];
+  const file = files[0];
 
   if (file.type !== "application/json" && !file.name.includes(".json"))
     return callback("Invalid file type, must be a JSON file.", null, null);

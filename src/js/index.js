@@ -53,15 +53,13 @@ $(() => {
    * Import Section
    */
   $("#csvFileInput").change((e) => {
-    handleCsvFileChange(e, (err, filename, contents) => {
+    handleCsvFileChange(e.target.files, (err, filename, contents) => {
       if (err) return $("#csvFileLabel").text(err);
 
       store("data", contents.data);
       store("fields", contents.fields);
 
       $("#csvFileLabel").text(`File: ${filename}`);
-      $("#jsonFileLabel").text("Choose JSON file...");
-      $("#jsonFileInput").val("");
       $("#importButton").prop("disabled", false);
 
       $("#fileSummarySpan").html(
@@ -71,15 +69,13 @@ $(() => {
   });
 
   $("#jsonFileInput").change((e) => {
-    handleJsonFileChange(e, (err, filename, contents) => {
+    handleJsonFileChange(e.target.files, (err, filename, contents) => {
       if (err) return $("#jsonFileLabel").text(err);
 
       store("data", contents.data);
       store("route", contents.route);
 
       $("#jsonFileLabel").text(`File: ${filename}`);
-      $("#csvFileLabel").text("Choose CSV file...");
-      $("#csvFileInput").val("");
       $("#importButton").prop("disabled", false);
     });
   });
