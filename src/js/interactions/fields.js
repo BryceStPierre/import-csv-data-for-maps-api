@@ -5,9 +5,6 @@ import { store, retrieve } from "../utils/storage";
 export const populateGeocodingFields = () => {
   const fields = retrieve("fields");
 
-  let dataFields = [...fields];
-  dataFields.splice(0, 1);
-
   store("config", {
     fields: {
       geocoding: {
@@ -17,7 +14,7 @@ export const populateGeocodingFields = () => {
         postalCode: fields[0],
         country: fields[0],
       },
-      data: dataFields,
+      data: []
     },
   });
 
@@ -41,8 +38,8 @@ export const populateDataFields = () => {
   const config = retrieve("config");
 
   let dataFields = [...fields];
-  let values = Object.values(config.fields.geocoding);
-  values.forEach((v) => {
+  let geocodingFields = Object.values(config.fields.geocoding);
+  geocodingFields.forEach((v) => {
     let index = dataFields.findIndex((f) => f === v);
     if (index !== -1) dataFields.splice(index, 1);
   });
