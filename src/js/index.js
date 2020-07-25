@@ -122,11 +122,9 @@ $(() => {
   });
 
   $("#plotButton").click(() => {
-    if ($("#fieldsForm").get(0).checkValidity() === false) {
-      $("#fieldsForm").addClass("was-validated");
-    } else {
-      store("progress", 0);
+    if ($("#fieldsForm").get(0).checkValidity()) {
       setFieldsDisabled(true);
+      store("progress", 0);
 
       geocode(transform(), (err, geocodedData) => {
         if (err || !geocodedData) return;
@@ -137,6 +135,8 @@ $(() => {
         embedJsonData();
         goToRouteSection();
       });
+    } else {
+      $("#fieldsForm").addClass("was-validated");
     }
   });
 
