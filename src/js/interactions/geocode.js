@@ -1,6 +1,12 @@
-import { incrementProgressBar } from "../interactions/progress";
+import { incrementProgressBar } from "./progress";
 
-export const geocode = (data, callback) => {
+import { addressAsString } from "../utils/string";
+import { retrieve } from "../utils/storage";
+
+export const geocode = (callback) => {
+  const rawData = retrieve("data");
+  const data = transform(rawData);
+
   let geocoder = new google.maps.Geocoder();
   let increment = (1 / data.length) * 100;
 
@@ -34,5 +40,32 @@ const geocoderPromise = (geocoder, object, increment, seconds) => {
         return resolve(o);
       });
     }, seconds * 1000);
+  });
+};
+
+const transform = (rawData) => {
+  const config = retrieve("config");
+
+  const geocodingFields = config.fields.geocoding;
+  const dataFields = config.fields.data;
+
+  return rawData.map((d) => {
+    let addressObject = {
+      address: d[geocodingFields.address],
+      city: d[geocodingFields.city],
+      province: d[geocodingFields.province],
+      postalCode: d[geocodingFields.postalCode],
+      country: d[geocodingFields.country],
+    };
+    let addressString = addressAsString(addressObject);
+
+    let data = {};
+    dataFields.forEach((f) => (data[f] = d[f]));
+
+    return {
+      addressObject,
+      addressString,
+      data,
+    };
   });
 };

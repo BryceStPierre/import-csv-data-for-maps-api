@@ -33,10 +33,9 @@ import {
   handleDirectionsChanged,
 } from "./interactions/map";
 
+import { geocode } from "./interactions/geocode";
 import { resetProgressBar } from "./interactions/progress";
 
-import { geocode } from "./data/geocode";
-import { transform } from "./data/transform";
 import { embedJsonData } from "./export/json";
 import { exportPdfReport } from "./export/pdf";
 
@@ -126,7 +125,7 @@ $(() => {
       setFieldsDisabled(true);
       store("progress", 0);
 
-      geocode(transform(), (err, geocodedData) => {
+      geocode((err, geocodedData) => {
         if (err || !geocodedData) return;
 
         store("data", geocodedData);
