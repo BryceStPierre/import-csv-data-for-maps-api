@@ -10,8 +10,10 @@ export const embedJsonData = () => {
   };
   const encodedJson = encodeURIComponent(JSON.stringify(json));
 
-  const filename = `map-data-${dateAsYYYYMMDD()}.json`;
-  $("#exportJsonButton").attr("download", filename);
+  $("#exportJsonButton").attr(
+    "download", 
+    `map-data-${dateAsYYYYMMDD()}.json`
+  );
   $("#exportJsonButton").attr(
     "href",
     `data:text/json;charset=utf-8,${encodedJson}`
