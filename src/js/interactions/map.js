@@ -91,9 +91,7 @@ const pushRouteLocation = (index) => {
 
 export const renderDirections = (directionsRenderer, map) => {
   const route = retrieve("route");
-  if (!route) return directionsRenderer.setMap(null);
-
-  if (route.length <= 1) return directionsRenderer.setMap(null);
+  if (!route || route.length <= 1) return directionsRenderer.setMap(null);
 
   const data = retrieve("data");
   directionsRenderer.setMap(map);
