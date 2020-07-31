@@ -77,7 +77,14 @@ const ResetControl = (div) => {
 
   resetControl.addEventListener("click", () => {
     store("route", []);
+    embedJsonData();
     createMap();
+
+    let $td = $("<td />")
+      .attr("colspan", "3")
+      .text("No directions to show.");
+    let $tr = $("<tr />").append($td);
+    $("#locationTableBody").append($tr);
   });
 };
 
