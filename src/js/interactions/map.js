@@ -56,15 +56,15 @@ export const createMap = () => {
   });
   map.fitBounds(bounds);
 
-  let resetControlDiv = document.createElement("div");
-  let resetControl = new ResetControl(resetControlDiv);
-  resetControlDiv.index = 1;
-  map.controls[google.maps.ControlPosition.TOP_LEFT].push(resetControlDiv);
+  let resetControl = document.createElement("div");
+  createResetControl(resetControl);
+  resetControl.index = 1;
+  map.controls[google.maps.ControlPosition.TOP_LEFT].push(resetControl);
 
   return map;
 };
 
-const ResetControl = (div) => {
+const createResetControl = (div) => {
   let resetControl = document.createElement("div");
   resetControl.className = "map-button";
   resetControl.title = "Click to reset route.";
@@ -84,6 +84,7 @@ const ResetControl = (div) => {
       .attr("colspan", "3")
       .text("No directions to show.");
     let $tr = $("<tr />").append($td);
+    $("#locationTableBody").html("");
     $("#locationTableBody").append($tr);
   });
 };
